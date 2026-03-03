@@ -3,11 +3,11 @@
   "rewrites": [
     {
       "source": "/api/(.*)",
-      "destination": "/api/index.ts"
+      "destination": "/server/index.ts"
     }
   ],
   "functions": {
-    "api/index.ts": {
+    "server/index.ts": {
       "runtime": "@vercel/node"
     }
   }
