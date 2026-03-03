@@ -189,6 +189,11 @@ app.post('/api/payments', async (req, res) => {
 });
 
 // Export the app for Vercel
+import { initDB } from './setup_db_logic.js';
+
+// Run DB init in background
+initDB().catch(console.error);
+
 export default app;
 
 if (process.env.NODE_ENV !== 'production') {
