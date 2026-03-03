@@ -236,7 +236,14 @@ export const useStore = create<AppState>((set, get) => ({
       });
     }
 
-    const finalInvoice = { ...invoice, amountPaid, payments };
+    let finalStatus = invoice.status;
+    if (amountPaid >= invoice.total) {
+      finalStatus = 'Paid';
+    } else if (amountPaid > 0) {
+      finalStatus = 'Partially Paid';
+    }
+
+    const finalInvoice = { ...invoice, amountPaid, payments, status: finalStatus };
     
     await fetch(`${API_URL}/invoices`, {
       method: 'POST',
@@ -318,9 +325,19 @@ export const useStore = create<AppState>((set, get) => ({
     });
 
     const newAmountPaid = (invoice.amountPaid || 0) + payment.amount;
+    
+    // Automatically determine status
+    let newStatus: Invoice['status'] = invoice.status;
+    if (newAmountPaid >= invoice.total) {
+      newStatus = 'Paid';
+    } else if (newAmountPaid > 0) {
+      newStatus = 'Partially Paid';
+    }
+
     const updatedInvoice = {
       ...invoice,
       amountPaid: newAmountPaid,
+      status: newStatus,
       payments: [...(invoice.payments || []), payment]
     };
 
