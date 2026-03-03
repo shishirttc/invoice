@@ -241,6 +241,9 @@ export const useStore = create<AppState>((set, get) => ({
       finalStatus = 'Paid';
     } else if (amountPaid > 0) {
       finalStatus = 'Partially Paid';
+    } else if (finalStatus === 'Draft' && amountPaid === 0) {
+      // Keep as Draft if no payment
+      finalStatus = 'Draft';
     }
 
     const finalInvoice = { ...invoice, amountPaid, payments, status: finalStatus };
