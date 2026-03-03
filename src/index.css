@@ -1,0 +1,22 @@
+@import "tailwindcss";
+
+@media print {
+  body {
+    background-color: white !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  .no-print {
+    display: none !important;
+  }
+  .print-only {
+    display: block !important;
+  }
+  @page {
+    margin: 0; /* This hides browser headers and footers */
+  }
+  /* Add internal padding to printable content so it doesn't touch edges */
+  #printable-invoice, .print\:block {
+    padding: 1.5cm !important;
+  }
+}
